@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './TicTacToe.css'
 import circle_icon from '../Assets/circle.png'
 import cross_icon from '../Assets/cross.png'
@@ -20,51 +20,56 @@ const TicTacToe = () => {
 
     let box_array = [box1,box2,box3,box4,box5,box6,box7,box8,box9];
 
+    useEffect(() => {
+        const won = checkWin();
+        if(!won && count === 9) {
+            titleRef.current.innerHTML = `<span> the game is tie </span>`;
+        }
+    }, [count])
+
     const toggle = (e,num) => {
         if(lock) {
             return 0;
         }
+        if(data[num] != "") {
+            return;
+        }
         if(count % 2 === 0){
             e.target.innerHTML = `<img src='${cross_icon}'>`;
             data[num] = "x";
-            setCount(count=>count+1);
-            console.log(count);
         } else {
             e.target.innerHTML = `<img src='${circle_icon}'>`;
             data[num] = "o";
-            setCount(count=>count+1);
         }
-        if(count === 8) {
-            titleRef.current.innerHTML = `<span> the game is tie </span>`;
-        }
-        checkWin();
+        setCount(count=>count+1);
     }
 
     const checkWin = () => {
         if(data[0]===data[1] && data[1]===data[2] && data[2]!=""){
-            won(data[2]);
+            return won(data[2]);
         }
         else if(data[3]===data[4] && data[4]===data[5] && data[5]!=""){
-            won(data[5]);
+            return won(data[5]);
         }
         else if(data[6]===data[7] && data[7]===data[8] && data[8]!=""){
-            won(data[8]);
+            return won(data[8]);
         }
         else if(data[0]===data[3] && data[3]===data[6] && data[6]!=""){
-            won(data[6]);
+            return won(data[6]);
         }
         else if(data[1]===data[4] && data[4]===data[7] && data[7]!=""){
-            won(data[7]);
+            return won(data[7]);
         }
         else if(data[2]===data[5] && data[5]===data[8] && data[8]!=""){
-            won(data[8]);
+            return won(data[8]);
         }
         else if(data[0]===data[4] && data[4]===data[8] && data[8]!=""){
-            won(data[8]);
+            return won(data[8]);
         }
         else if(data[2]===data[4] && data[4]===data[6] && data[6]!=""){
-            won(data[6]);
+            return won(data[6]);
         }
+        return false;
     }
 
     const won = (winner) => {
@@ -75,6 +80,7 @@ const TicTacToe = () => {
         else{
             titleRef.current.innerHTML = `Congratulation: <img src=${circle_icon}> won`;
         }
+        return true;
     }
 
     const reset = () => {
@@ -84,8 +90,8 @@ const TicTacToe = () => {
         box_array.map((e)=>{
             e.current.innerHTML = "";
         })
+        setCount(0);
     }
-    
     return (
         <div className='container'>
             <h1 className="title" ref={titleRef}>Tic Tac Toe Game In<span>React</span></h1>
