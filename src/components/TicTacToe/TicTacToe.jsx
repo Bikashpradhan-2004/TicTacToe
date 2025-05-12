@@ -23,7 +23,7 @@ const TicTacToe = () => {
     useEffect(() => {
         const won = checkWin();
         if(!won && count === 9) {
-            titleRef.current.innerHTML = `<span> the game is tie </span>`;
+            titleRef.current.innerHTML = `<span> the game is raja </span>`;
         }
     }, [count])
 
