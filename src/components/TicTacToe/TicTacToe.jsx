@@ -23,7 +23,7 @@ const TicTacToe = () => {
     useEffect(() => {
         const won = checkWin();
         if(!won && count === 9) {
-            titleRef.current.innerHTML = `<span> the game is raja </span>`;
+            titleRef.current.innerHTML = `<span> the game is tie </span>`;
         }
     }, [count])
 
@@ -86,7 +86,7 @@ const TicTacToe = () => {
     const reset = () => {
         setLock(false);
         data = ["","","","","","","","",""];
-        titleRef.current.innerHTML = `Tic Tac Toe Game In <span>React</span>`;
+        titleRef.current.innerHTML = `Tic Tac Toe Game In <span>React(Hello Raja)</span>`;
         box_array.map((e)=>{
             e.current.innerHTML = "";
         })
